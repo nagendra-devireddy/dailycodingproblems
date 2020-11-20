@@ -1,0 +1,74 @@
+package bst;
+
+import trees.Node;
+
+/**
+ * Given a tree, find the largest tree/subtree that is a BST.
+ * Given a tree, return the size of the largest tree/subtree that is a BST.
+ */
+public class LargestBST {
+    static int max = 0;
+
+    static int largestBst(Node root) {
+        max = 0;
+        largestBstHelper(root);
+        return max;
+    }
+
+    static NodeData largestBstHelper(Node root) {
+
+        if (root == null) {
+            return null;
+        }
+
+        NodeData left = largestBstHelper(root.left);
+        NodeData right = largestBstHelper(root.right);
+        NodeData node = new NodeData(root.data);
+
+
+        if (left != null && left.isBST && root.data >= left.max && right != null && right.isBST && root.data <= right.min) {
+            node.size = left.size + right.size + 1;
+            node.max = Math.max(node.max, Math.max(right.max, left.max));
+            node.min = Math.min(node.min, Math.min(right.min, left.min));
+            node.isBST = true;
+        } else if (left == null && right == null) {
+            node.isBST = true;
+        }
+
+        if (node.size > max && node.isBST) {
+            max = node.size;
+        }
+        return node;
+    }
+
+
+    public static void main(String args[]) {
+
+        Node root = new Node(50);
+        root.left = new Node(30);
+        root.right = new Node(60);
+        root.left.left = new Node(5);
+        root.left.right = new Node(20);
+        root.right.left = new Node(45);
+        root.right.right=new Node(70);
+        root.right.right.left=new Node(65);
+        root.right.right.right=new Node(80);
+        System.out.println(LargestBST.largestBst(root));
+
+    }
+}
+
+class NodeData {
+
+    public int max;
+    public int min;
+    public int size;
+    public boolean isBST;
+
+    NodeData(int data) {
+        this.max = data;
+        this.min = data;
+        this.size = 1;
+        this.isBST = false;
+    }
+}

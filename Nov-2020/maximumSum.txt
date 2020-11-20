@@ -1,0 +1,46 @@
+package trees;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+/***
+*Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
+**/
+
+public class MaxSum {
+
+    int maxSum ;
+
+    public int maxPathSum(Node root) {
+        maxSum= Integer.MIN_VALUE;
+        maxPathSumHelper(root);
+        return maxSum;
+    }
+
+    public int maxPathSumHelper(Node root) {
+
+        if (root == null) {
+            return 0;
+        }
+        int ls = maxPathSumHelper(root.left);
+        int rs = maxPathSumHelper(root.right);
+        int maxSumTillCurrentNode = 0;
+        int maxPathChild = Math.max(ls, rs);
+
+        if (root.data > maxSum) {
+            maxSum = root.data;
+        }
+        if (ls + rs + root.data > maxSum) {
+            maxSum = ls + rs + root.data;
+        }
+        if (maxPathChild + root.data > maxSum) {
+            maxSum = maxPathChild + root.data;
+        }
+        maxSumTillCurrentNode = Math.max(maxPathChild + root.data, root.data);
+        return maxSumTillCurrentNode > 0 ? maxSumTillCurrentNode : 0;
+    }
+
+
+}

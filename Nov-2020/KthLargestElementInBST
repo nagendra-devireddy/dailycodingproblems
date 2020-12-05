@@ -1,0 +1,24 @@
+
+/** Given the root to a binary search tree, find the second largest node in the tree.. **/
+ Stack<Integer> stack = new Stack<Interger>();
+    public int kthLargest(Node root,int K)
+    {
+        Integer ans=0;
+        stack = new Stack<Interger>();
+        kthLargestHelper(root);
+        
+        while(K>0 && !stack.isEmpty()){
+            ans=stack.pop();
+            K--;
+        }
+        return ans;
+    }
+    
+    void kthLargestHelper(Node node){
+        if(node==null){
+            return;
+        }
+        kthLargestHelper(node.left);
+        stack.push(node.data);
+        kthLargestHelper(node.right);
+    }

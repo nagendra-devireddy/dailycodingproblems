@@ -1,0 +1,37 @@
+/** Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.  **/
+
+public class PairOfPrimeNumbers {
+
+
+    private void getPrimeNumbers(PairOfPrimeNumbers pn, int n) {
+        boolean[] dp = new boolean[n + 1];
+        for(int i=3;i<=n;i=i+2){
+            dp[i]=true;
+        }
+        for(int i=3;i<=n;i++){
+            if(dp[i]){
+                for(int j=i*i;j<=n;j=j+i){
+                  dp[j]=false;
+                }
+            }
+        }
+
+        for(int i=2;i<=n;i++){
+            if(dp[i] && dp[n-i]){
+                System.out.println(i+" and "+(n-i));
+                break;
+            }
+        }
+
+    }
+
+
+    public static void main(String args[]) {
+
+        int n = 28;
+
+        PairOfPrimeNumbers pn = new PairOfPrimeNumbers();
+        pn.getPrimeNumbers(pn, n);
+    }
+
+}

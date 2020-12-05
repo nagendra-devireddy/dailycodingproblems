@@ -1,0 +1,28 @@
+  /** Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+For example, given [100, 4, 200, 1, 3, 2], the longest consecutive element sequence is [1, 2, 3, 4]. Return its length: 4. **/
+  
+  
+  // return the length of the longest subsequene of consecutive integers
+	static int findLongestConseqSubseq(int arr[], int N)
+	{
+	  int ans=1;
+	  Set<Integer> set = new HashSet<Integer>();
+	  for(int i=0;i<N;i++){
+	      set.add(arr[i]);
+	  }
+	  
+	  for(int i=0;i<N;i++){
+	      int count=1;
+	      if(!set.contains(arr[i]-1)){
+	         int nextElement=arr[i]+1;
+	         while(set.contains(nextElement)){
+	             count=count+1;
+	             set.remove(nextElement);
+	             nextElement++;
+	         }
+	         ans=Math.max(count,ans);
+	      }
+	  }
+	  return ans;
+	}

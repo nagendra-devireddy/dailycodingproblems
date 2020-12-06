@@ -1,0 +1,53 @@
+/**
+Given a 2D board of characters and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+**/
+
+package graphs;
+
+class CheckIfWorkExistsInGraph {
+    public boolean exist(char[][] board, String word) {
+
+        int n= board.length;
+        int m = board[0].length;
+        if(word.length()>n*m){
+            return false;
+        }
+        int index=0;
+        boolean[][] visitedArray = new boolean[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visitedArray[i][j] && word.charAt(index)==board[i][j]){ // do dfs for word
+                    if(dfsHelper(i,j,index,visitedArray,word,board,n,m)){
+                        return true;
+                    }
+                    visitedArray= new boolean[n][m];
+                }
+            }
+
+        }
+        return false;
+    }
+
+
+    public boolean dfsHelper(int i , int j , int wordIndex, boolean[][] visitedArray , String word , char[][] board ,int n , int m){
+        if(i>=0 && j>=0 && i<n && j<m && !visitedArray[i][j] && board[i][j]==word.charAt(wordIndex)){
+            visitedArray[i][j]=true;
+            if(wordIndex==word.length()-1){
+                return true;
+            }
+            boolean right =  dfsHelper(i+1,j,wordIndex+1,visitedArray,word,board,n,m);
+            boolean left  =  dfsHelper(i-1,j,wordIndex+1,visitedArray,word,board,n,m);
+            boolean top   =  dfsHelper(i,j+1,wordIndex+1,visitedArray,word,board,n,m);
+            boolean down  =  dfsHelper(i,j-1,wordIndex+1,visitedArray,word,board,n,m);
+            if(right || left || top || down){
+                return true;
+            }
+            visitedArray[i][j]=false;
+        }
+        return false;
+
+    }
+}

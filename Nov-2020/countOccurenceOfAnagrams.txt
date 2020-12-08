@@ -1,0 +1,32 @@
+ 
+boolean compare(int[] strOcc, int[] patOcc) {
+        for (int i = 0; i < 26; i++) {
+            if (strOcc[i] != patOcc[i])
+                return false;
+        }
+        return true;
+
+    }
+
+    int search(String pat, String txt) {
+        int ans = 0;
+        int[] patOcc = new int[26];
+        for (int i = 0; i < pat.length(); i++) {
+            patOcc[pat.charAt(i) - 'a']++;
+        }
+        int patLength = pat.length();
+        int[] strOcc = new int[26];
+        for (int i = 0; i < txt.length(); i++) {
+            if (compare(strOcc, patOcc)) {
+                ans++;
+            }
+            strOcc[txt.charAt(i) - 'a']++;
+            if (i - patLength >= 0) {
+                strOcc[txt.charAt(i - patLength)-'a']--;
+            }
+        }
+        if (compare(strOcc, patOcc)) {
+            ans++;
+        }
+        return ans;
+    }

@@ -1,0 +1,34 @@
+  private static Scanner sc = new Scanner(System.in);
+    
+    public String findWinner(String str){
+        // Two Players A or B
+        
+        Stack<Character> stack = new Stack<Character>();
+        int count=0;
+        for(int i=0;i<str.length();i++){
+            
+            if(stack.isEmpty() || stack.peek()!=str.charAt(i)){
+              stack.push(str.charAt(i));  
+            }
+            else{
+                stack.pop();
+                count++;
+            }
+        }
+        if(count%2==0){
+            return "B";
+        }
+        return "A";
+        
+    }
+    
+	public static void main (String[] args) {
+	 GFG gfg = new GFG();
+	 int n = sc.nextInt();
+	 while(n-->0){
+	     
+	     String s = sc.next();
+	     System.out.println(gfg.findWinner(s)); 
+	     
+	 }
+	}

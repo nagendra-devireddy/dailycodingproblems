@@ -1,0 +1,44 @@
+	
+	public int countOfElements(int[] arr , int k){
+	    
+	    int n = arr.length;
+	    if(arr[0]>k){
+	        return 0;
+	    }
+	    if(arr[n-1]<=k){
+	        return n;
+	    }
+	    int ans=0;
+	    ans = binarySearch(arr,k,0,n-1);
+	    return ans;
+	    
+	}
+	
+	public Integer binarySearch(int[] arr,int k,int startIndex,int endIndex){
+	    
+	    int middle = (startIndex + endIndex)/2;
+	    if(startIndex<=endIndex){
+	        
+	        if(arr[middle]==k && middle+1<=endIndex && arr[middle+1]>k){
+	            return middle+1;
+	        }
+	        if(startIndex==endIndex){
+	            if(arr[startIndex]<=k){
+	                return startIndex+1;
+	            }
+	            if(arr[startIndex]>k){
+	                return startIndex;
+	            }
+	        }
+	        if(arr[middle]>k){
+	           return binarySearch(arr,k,startIndex,middle-1);
+	        }
+	        else{
+	          return  binarySearch(arr,k,middle+1,endIndex);
+	        }
+	        
+	    }
+	    else {
+	        return 0;
+	    }
+	}

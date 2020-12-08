@@ -1,4 +1,8 @@
- 
+/**Given a word W and a string S, find all starting indices in S which are anagrams of W.
+
+For example, given that W is "ab", and S is "abxaba", return 0, 3, and 4. **/
+
+
 boolean compare(int[] strOcc, int[] patOcc) {
         for (int i = 0; i < 26; i++) {
             if (strOcc[i] != patOcc[i])
